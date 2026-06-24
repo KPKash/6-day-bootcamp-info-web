@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>6-Day IT Skills Boot-Camp · NexusUdaan</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink:    #0a0e1a;
+      --navy:   #0d1b4b;
+      --blue:   #1a56db;
+      --cyan:   #06b6d4;
+      --yellow: #facc15;
+      --green:  #22c55e;
+      --purple: #a855f7;
+      --orange: #f97316;
+      --pink:   #ec4899;
+      --white:  #ffffff;
+      --off:    #f0f4ff;
+      --RoyBlue: #311add;
+
+      /* per-day accent */
+      --d1: #06b6d4;
+      --d2: #22c55e;
+      --d3: #f97316;
+      --d4: #a855f7;
+      --d5: #ec4899;
+      --d6: #311add;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Space Grotesk', sans-serif;
+      background: var(--ink);
+      color: var(--white);
+      line-height: 1.5;
+    }
+
+    /* ── GRAIN OVERLAY ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.35;
+    }
+
+    /* ── HEADER ── */
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 22px 48px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      position: sticky;
+      top: 0;
+      background: rgba(10,14,26,0.92);
+      backdrop-filter: blur(12px);
+      z-index: 100;
+    }
+
+    .logo-img { height: 32px; filter: brightness(0) invert(1); }
+
+    .header-tag {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.35);
+    }
+
+    /* ── HERO ── */
+    .hero {
+      padding: 10px 48px;
+      max-width: 1100px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--cyan);
+      margin-bottom: 28px;
+    }
+    .hero-eyebrow::before {
+      content: '';
+      width: 28px;
+      height: 2px;
+      background: var(--cyan);
+      border-radius: 2px;
+    }
+
+    .hero-title {
+      font-size: clamp(3.2rem, 8vw, 6.5rem);
+      font-weight: 700;
+      line-height: 1.0;
+      letter-spacing: -0.03em;
+      margin-bottom: 32px;
+    }
+
+    .hero-title .line2 {
+      color: transparent;
+      -webkit-text-stroke: 2px rgba(255,255,255,0.3);
+    }
+
+    .hero-title .accent {
+      background: linear-gradient(90deg, var(--cyan), var(--blue));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-desc {
+      font-size: 1.1rem;
+      color: rgba(255,255,255,0.55);
+      max-width: 520px;
+      margin-bottom: 48px;
+      line-height: 1.7;
+    }
+
+    /* ── STAT PILLS ── */
+    .stat-row {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 25px;
+    }
+
+    .stat-pill {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 100px;
+      padding: 8px 18px;
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: rgba(255,255,255,0.7);
+      backdrop-filter: blur(4px);
+    }
+
+    .stat-pill .dot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    /* ── BIG DIVIDER ── */
+    .section-heading {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 48px 40px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .section-heading h2 {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.3);
+      white-space: nowrap;
+    }
+
+    .section-heading .line {
+      flex: 1;
+      height: 1px;
+      background: rgba(255,255,255,0.1);
+    }
+
+    /* ── DAY CARDS ── */
+    .days-wrap {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 70px 30px 70px;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .day-card {
+      border-top: 1px solid rgba(255,255,255,0.07);
+      position: relative;
+      transition: background 0.3s;
+    }
+    .day-card:last-child { border-bottom: 1px solid rgba(255,255,255,0.07); }
+    .day-card.open { background: rgba(255,255,255,0.025); }
+
+    /* coloured left bar */
+    .day-card::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 3px;
+      opacity: 0;
+      transition: opacity 0.3s;
+      border-radius: 0 2px 2px 0;
+    }
+    .day-card.open::before { opacity: 1; }
+    .day-card[data-color="d1"]::before { background: var(--d1); }
+    .day-card[data-color="d2"]::before { background: var(--d2); }
+    .day-card[data-color="d3"]::before { background: var(--d3); }
+    .day-card[data-color="d4"]::before { background: var(--d4); }
+    .day-card[data-color="d5"]::before { background: var(--d5); }
+    .day-card[data-color="d6"]::before { background: var(--d6); }
+
+    .day-trigger {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      padding: 28px 24px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      color: inherit;
+      text-align: left;
+      transition: padding-left 0.3s;
+    }
+    .day-card.open .day-trigger { padding-left: 28px; }
+
+    .day-num {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      min-width: 52px;
+    }
+
+    .day-card[data-color="d1"] .day-num { color: var(--d1); }
+    .day-card[data-color="d2"] .day-num { color: var(--d2); }
+    .day-card[data-color="d3"] .day-num { color: var(--d3); }
+    .day-card[data-color="d4"] .day-num { color: var(--d4); }
+    .day-card[data-color="d5"] .day-num { color: var(--d5); }
+    .day-card[data-color="d6"] .day-num { color: var(--d6); }
+
+    .day-icon {
+      font-size: 1.6rem;
+      flex-shrink: 0;
+    }
+
+    .day-info { flex: 1; }
+
+    .day-name {
+      font-size: 1.2rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      margin-bottom: 2px;
+    }
+
+    .day-tagline {
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.4);
+    }
+
+    .day-tag {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      border-radius: 100px;
+      border: 1px solid;
+      white-space: nowrap;
+    }
+
+    .day-card[data-color="d1"] .day-tag { color: var(--d1); border-color: var(--d1); }
+    .day-card[data-color="d2"] .day-tag { color: var(--d2); border-color: var(--d2); }
+    .day-card[data-color="d3"] .day-tag { color: var(--d3); border-color: var(--d3); }
+    .day-card[data-color="d4"] .day-tag { color: var(--d4); border-color: var(--d4); }
+    .day-card[data-color="d5"] .day-tag { color: var(--d5); border-color: var(--d5); }
+    .day-card[data-color="d6"] .day-tag { color: var(--d6); border-color: var(--d6); }
+
+    .chevron {
+      width: 20px; height: 20px;
+      color: rgba(255,255,255,0.3);
+      flex-shrink: 0;
+      transition: transform 0.35s cubic-bezier(.4,0,.2,1), color 0.3s;
+    }
+    .day-card.open .chevron {
+      transform: rotate(180deg);
+      color: rgba(255,255,255,0.7);
+    }
+
+    /* ── BODY PANEL ── */
+    .day-body {
+      display: grid;
+      grid-template-rows: 0fr;
+      transition: grid-template-rows 0.4s cubic-bezier(.4,0,.2,1);
+    }
+    .day-card.open .day-body { grid-template-rows: 1fr; }
+
+    .day-body-inner {
+      overflow-x: auto;
+    }
+
+    .day-body-content {
+      padding: 0 24px 36px 100px;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 20px;
+    }
+
+    .session-block {
+      
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 10px;
+      padding: 20px;
+      transition: border-color 0.3s;
+    }
+
+    .day-card[data-color="d1"] .session-block:hover { border-color: var(--d1); }
+    .day-card[data-color="d2"] .session-block:hover { border-color: var(--d2); }
+    .day-card[data-color="d3"] .session-block:hover { border-color: var(--d3); }
+    .day-card[data-color="d4"] .session-block:hover { border-color: var(--d4); }
+    .day-card[data-color="d5"] .session-block:hover { border-color: var(--d5); }
+    .day-card[data-color="d6"] .session-block:hover { border-color: var(--d6); }
+
+    .session-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .day-card[data-color="d1"] .session-label { color: var(--d1); }
+    .day-card[data-color="d2"] .session-label { color: var(--d2); }
+    .day-card[data-color="d3"] .session-label { color: var(--d3); }
+    .day-card[data-color="d4"] .session-label { color: var(--d4); }
+    .day-card[data-color="d5"] .session-label { color: var(--d5); }
+    .day-card[data-color="d6"] .session-label { color: var(--d6); }
+
+    .session-title {
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 12px;
+      line-height: 1.3;
+    }
+
+    .session-block ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .session-block ul li {
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.55);
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      line-height: 1.5;
+    }
+
+    .session-block ul li::before {
+      content: '→';
+      flex-shrink: 0;
+      margin-top: 0px;
+      font-size: 0.72rem;
+      opacity: 0.5;
+    }
+
+    /* outcome col */
+    .outcome-col {
+      background: transparent;
+      border: none;
+      padding: 20px 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+    }
+
+    .outcome-col .outcome-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .day-card[data-color="d1"] .outcome-label { color: var(--d1); }
+    .day-card[data-color="d2"] .outcome-label { color: var(--d2); }
+    .day-card[data-color="d3"] .outcome-label { color: var(--d3); }
+    .day-card[data-color="d4"] .outcome-label { color: var(--d4); }
+    .day-card[data-color="d5"] .outcome-label { color: var(--d5); }
+    .day-card[data-color="d6"] .outcome-label { color: var(--d6); }
+
+    .outcome-col p {
+      font-size: 0.82rem;
+      color: rgba(255,255,255,0.45);
+      line-height: 1.65;
+      font-style: italic;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding: 20px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 48px;
+      margin-bottom: 48px;
+    }
+
+    .footer-brand .logo-img {
+      margin-bottom: 16px;
+      display: block;
+    }
+
+    .footer-brand p {
+      font-size: 0.82rem;
+      color: rgba(255,255,255,0.35);
+      line-height: 1.8;
+      max-width: 280px;
+    }
+
+    .footer-col h5 {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.25);
+      margin-bottom: 16px;
+    }
+
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+
+    .footer-col ul li {
+      font-size: 0.82rem;
+      color: rgba(255,255,255,0.45);
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+    }
+
+    .footer-col ul li a {
+      color: rgba(255,255,255,0.45);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-col ul li a:hover { color: var(--white); }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(255,255,255,0.07);
+      padding-top: 24px;
+      display: flex;
+      justify-content: space-between;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      color: rgba(255,255,255,0.2);
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    /* responsive */
+    @media (max-width: 800px) {
+      header { padding: 18px 24px; }
+      .hero { padding: 56px 24px 48px; }
+      .section-heading, .days-wrap { padding-left: 24px; padding-right: 24px; }
+      .day-body-content { grid-template-columns: 1fr; padding-left: 24px; }
+      .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+      footer { padding: 40px 24px 24px; }
+      .day-trigger { padding: 20px 16px; gap: 14px; }
+      .day-tag { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <img class="logo-img" src=""/>
+  <span class="header-tag">6-Day IT Skills Boot-Camp · 2026</span>
+</header>
+
+<!-- ── HERO ── -->
+<section class="hero">
+  <div class="hero-eyebrow">NexusUdaan · Beginner Programme</div>
+  <h1 class="hero-title">
+    <span class="line1">6-Day IT Skills</span><br />
+    <span class="line2">Boot<span class="accent">-Camp</span></span>
+  </h1>
+  <p class="hero-desc">
+    Understand the world of IT — the tools, the work, the careers — so you can make an informed decision about your future.
+  </p>
+  <div class="stat-row">
+    <div class="stat-pill"><span class="dot" style="background:var(--cyan)"></span>Python Programming</div>
+    <div class="stat-pill"><span class="dot" style="background:var(--orange)"></span>HTML &amp; CSS</div>
+    <div class="stat-pill"><span class="dot" style="background:var(--pink)"></span>UX &amp; Graphic Design</div>
+    <div class="stat-pill"><span class="dot" style="background:var(--yellow)"></span>Hands-On Projects Every Day</div>
+    <div class="stat-pill"><span class="dot" style="background:var(--green)"></span>Zero Prior Experience Needed</div>
+    <div class="stat-pill"><span class="dot" style="background:var(--RoyBlue)"></span>Future Proof Skills</div>
+  </div>
+</section>
+
+<!-- ── CURRICULUM HEADING ── -->
+<div class="section-heading">
+  <h2>Programme Curriculum</h2>
+  <div class="line"></div>
+  <h2>Expand Each Day</h2>
+</div>
+
+<!-- ── DAY CARDS ── -->
+<div class="days-wrap">
+
+  <!-- DAY 1 -->
+  <div class="day-card" id="d1" data-color="d1">
+    <button class="day-trigger" onclick="toggle('d1')" aria-expanded="false">
+      <span class="day-num">Day 01</span>
+      <span class="day-icon">🐍</span>
+      <div class="day-info">
+        <div class="day-name">Coding Fundamentals with Python</div>
+        <div class="day-tagline">First program, variables, data types &amp; basic I/O</div>
+      </div>
+      <span class="day-tag">Python</span>
+      <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+    </button>
+    <div class="day-body">
+      <div class="day-body-inner">
+        <div class="day-body-content">
+          <div class="session-block">
+            <div class="session-label">Session 01</div>
+            <div class="session-title">What is Programming?</div>
+            <ul>
+              <li>How programs work — instructions computers follow</li>
+              <li>Why Python is perfect for beginners</li>
+              <li>Installing Python and setting up VS Code / IDLE</li>
+              <li>Your first script: <code style="font-family:monospace;font-size:0.75rem;color:var(--cyan)">print("Hello, World!")</code></li>
+              <li>Understanding syntax errors and how to fix them</li>
+            </ul>
+          </div>
+          <div class="session-block">
+            <div class="session-label">Session 02</div>
+            <div class="session-title">Variables &amp; Data Types</div>
+            <ul>
+              <li>What is a variable? Storing information in memory</li>
+              <li>Data types: integers, floats, strings, booleans</li>
+              <li>Taking input with <code style="font-family:monospace;font-size:0.75rem;color:var(--cyan)">input()</code> and displaying with <code style="font-family:monospace;font-size:0.75rem;color:var(--cyan)">print()</code></li>
+              <li>Arithmetic operators: +, −, *, /, // , %</li>
+              <li>String operations: concatenation, f-strings, <code style="font-family:monospace;font-size:0.75rem;color:var(--cyan)">len()</code></li>
+            </ul>
+          </div>
+          <div class="session-block">
+            <div class="session-label">Session 03 · Project</div>
+            <div class="session-title">Build: Simple Calculator &amp; Greeter</div>
+            <ul>
+              <li>Calculator that adds, subtracts, multiplies, divides</li>
+              <li>Greeting program that personalises a welcome message</li>
+              <li>Common beginner errors walkthrough</li>
+              <li>Q&amp;A and reflection: what can code automate?</li>
+            </ul>
+          </div>
+          <div class="outcome-col session-block" style="grid-column: 1 / -1; display:flex; flex-direction:row; gap:20px; align-items:center; background:rgba(6,182,212,0.06); border-color:rgba(6,182,212,0.2);">
+            <div style="font-size:2rem;">✅</div>
+            <div>
+              <div class="outcome-label">Day Outcome</div>
+              <p>You'll have a working Python environment and understand how to write programs using variables, data types, operators, and user input — the same building blocks used in every programming language.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DAY 2 -->
+  <div class="day-card" id="d2" data-color="d2">
+    <button class="day-trigger" onclick="toggle('d2')" aria-expanded="false">
+      <span class="day-num">Day 02</span>
+      <span class="day-icon">🔁</span>
+      <div class="day-info">
+        <div class="day-name">Coding Fundamentals with Python</div>
+        <div class="day-tagline">Control flow, loops &amp; solving real-world problems</div>
+      </div>
+      <span class="day-tag">Python</span>
+      <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+    </button>
+    <div class="day-body">
+      <div class="day-body-inner">
+        <div class="day-body-content">
+          <div class="session-block">
+            <div class="session-label">Session 01</div>
+            <div class="session-title">Making Decisions in Code</div>
+            <ul>
+              <li>Conditional logic: <code style="font-family:monospace;font-size:0.75rem;color:var(--green)">if</code>, <code style="font-family:monospace;font-size:0.75rem;color:var(--green)">elif</code>, <code style="font-family:monospace;font-size:0.75rem;color:var(--green)">else</code></li>
+              <li>Comparison operators: ==, !=, &gt;, &lt;, &gt;=, &lt;=</li>
+              <li>Logical operators: <code style="font-family:monospace;font-size:0.75rem;color:var(--green)">and</code>, <code style="font-family:monospace;font-size:0.75rem;color:var(--green)">or</code>, <code style="font-family:monospace;font-size:0.75rem;color:var(--green)">not</code></li>
+              <li>Nested conditions with real-life examples</li>
+              <li>Even/odd checker and grade calculator</li>
+            </ul>
+          </div>
+          <div class="session-block">
+            <div class="session-label">Session 02</div>
+            <div class="session-title">Loops &amp; Repetition</div>
+            <ul>
+              <li><code style="font-family:monospace;font-size:0.75rem;color:var(--green)">for</code> loops — iterating over ranges and lists</li>
+              <li><code style="font-family:monospace;font-size:0.75rem;color:var(--green)">while</code> loops — repeat until a condition is false</li>
+              <li><code style="font-family:monospace;font-size:0.75rem;color:var(--green)">break</code> and <code style="font-family:monospace;font-size:0.75rem;color:var(--green)">continue</code> to control flow</li>
+              <li>Lists: creating, accessing, appending, looping</li>
+              <li>Summing a shopping list with a loop</li>
+            </ul>
+          </div>
+          <div class="session-block">
+            <div class="session-label">Session 03 · Project</div>
+            <div class="session-title">Build: Number Guessing Game</div>
+            <ul>
+              <li>Random number generation with <code style="font-family:monospace;font-size:0.75rem;color:var(--green)">random</code> module</li>
+              <li>Loop until the player guesses correctly</li>
+              <li>Count attempts and show a personalised result</li>
+              <li>Discussion: how do these ideas appear in real apps?</li>
+            </ul>
+          </div>
+          <div class="outcome-col session-block" style="grid-column: 1 / -1; display:flex; flex-direction:row; gap:20px; align-items:center; background:rgba(34,197,94,0.06); border-color:rgba(34,197,94,0.2);">
+            <div style="font-size:2rem;">✅</div>
+            <div>
+              <div class="outcome-label">Day Outcome</div>
+              <p>You can write programs that make decisions and repeat tasks automatically. These two concepts — conditions and loops — are the backbone of every piece of software ever written.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DAY 3 -->
+  <div class="day-card" id="d3" data-color="d3">
+    <button class="day-trigger" onclick="toggle('d3')" aria-expanded="false">
+      <span class="day-num">Day 03</span>
+      <span class="day-icon">🌐</span>
+      <div class="day-info">
+        <div class="day-name">UI Design using HTML &amp; CSS</div>
+        <div class="day-tagline">Structure the web — master the essential HTML tags</div>
+      </div>
+      <span class="day-tag">HTML · CSS</span>
+      <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+    </button>
+    <div class="day-body">
+      <div class="day-body-inner">
+        <div class="day-body-content">
+          <div class="session-block">
+            <div class="session-label">Session 01</div>
+            <div class="session-title">How the Web Works &amp; HTML Basics</div>
+            <ul>
+              <li>Browsers, servers &amp; what HTML actually is</li>
+              <li>Document skeleton: <code style="font-family:monospace;font-size:0.75rem;color:var(--orange)">&lt;html&gt;</code>, <code style="font-family:monospace;font-size:0.75rem;color:var(--orange)">&lt;head&gt;</code>, <code style="font-family:monospace;font-size:0.75rem;color:var(--orange)">&lt;body&gt;</code></li>
+              <li>Text tags: <code style="font-family:monospace;font-size:0.75rem;color:var(--orange)">&lt;h1&gt;–&lt;h6&gt;</code>, <code style="font-family:monospace;font-size:0.75rem;color:var(--orange)">&lt;p&gt;</code>, <code style="font-family:monospace;font-size:0.75rem;color:var(--orange)">&lt;strong&gt;</code>, <code style="font-family:monospace;font-size:0.75rem;color:var(--orange)">&lt;em&gt;</code>, <code style="font-family:monospace;font-size:0.75rem;color:var(--orange)">&lt;br&gt;</code></li>
+              <li>Opening vs self-closing tags and attributes</li>
+            </ul>
+          </div>
+          <div class="session-block">
+            <div class="session-label">Session 02</div>
+            <div class="session-title">Essential HTML Tags Deep Dive</div>
+            <ul>
+              <li>Links: <code style="font-family:monospace;font-size:0.75rem;color:var(--orange)">&lt;a href="..."&gt;</code> — internal and external</li>
+              <li>Images: <code style="font-family:monospace;font-size:0.75rem;color:var(--orange)">&lt;img src="..." alt="..."&gt;</code> — paths and alt text</li>
+              <li>Lists: ordered <code style="font-family:monospace;font-size:0.75rem;color:var(--orange)">&lt;ol&gt;</code>, unordered <code style="font-family:monospace;font-size:0.75rem;color:var(--orange)">&lt;ul&gt;</code>, items <code style="font-family:monospace;font-size:0.75rem;color:var(--orange)">&lt;li&gt;</code></li>
+              <li>Tables: <code style="font-family:monospace;font-size:0.75rem;color:var(--orange)">&lt;table&gt;</code>, <code style="font-family:monospace;font-size:0.75rem;color:var(--orange)">&lt;tr&gt;</code>, <code style="font-family:monospace;font-size:0.75rem;color:var(--orange)">&lt;th&gt;</code>, <code style="font-family:monospace;font-size:0.75rem;color:var(--orange)">&lt;td&gt;</code> with <code style="font-family:monospace;font-size:0.75rem;color:var(--orange)">colspan</code>/<code style="font-family:monospace;font-size:0.75rem;color:var(--orange)">rowspan</code></li>
+              <li>Grouping tags: <code style="font-family:monospace;font-size:0.75rem;color:var(--orange)">&lt;div&gt;</code>, <code style="font-family:monospace;font-size:0.75rem;color:var(--orange)">&lt;span&gt;</code>, <code style="font-family:monospace;font-size:0.75rem;color:var(--orange)">&lt;section&gt;</code>, <code style="font-family:monospace;font-size:0.75rem;color:var(--orange)">&lt;nav&gt;</code>, <code style="font-family:monospace;font-size:0.75rem;color:var(--orange)">&lt;footer&gt;</code></li>
+            </ul>
+          </div>
+          <div class="session-block">
+            <div class="session-label">Session 03 · Project</div>
+            <div class="session-title">Build: Student Bio Page</div>
+            <ul>
+              <li>A profile page with heading, photo, and about paragraph</li>
+              <li>A linked navigation bar using <code style="font-family:monospace;font-size:0.75rem;color:var(--orange)">&lt;ul&gt;</code> and <code style="font-family:monospace;font-size:0.75rem;color:var(--orange)">&lt;a&gt;</code></li>
+              <li>A table of hobbies/skills with headers and rows</li>
+              <li>Minimal inline CSS — just <code style="font-family:monospace;font-size:0.75rem;color:var(--orange)">color</code> and <code style="font-family:monospace;font-size:0.75rem;color:var(--orange)">font-size</code> to taste</li>
+            </ul>
+          </div>
+          <div class="outcome-col session-block" style="grid-column: 1 / -1; display:flex; flex-direction:row; gap:20px; align-items:center; background:rgba(249,115,22,0.06); border-color:rgba(249,115,22,0.2);">
+            <div style="font-size:2rem;">✅</div>
+            <div>
+              <div class="outcome-label">Day Outcome</div>
+              <p>You'll confidently use the core HTML tags that make up every webpage — text, links, images, lists, and tables — and understand how browsers read and render them.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DAY 4 -->
+  <div class="day-card" id="d4" data-color="d4">
+    <button class="day-trigger" onclick="toggle('d4')" aria-expanded="false">
+      <span class="day-num">Day 04</span>
+      <span class="day-icon">🎨</span>
+      <div class="day-info">
+        <div class="day-name">UI Design using HTML &amp; CSS</div>
+        <div class="day-tagline">Make it beautiful — CSS properties that transform HTML</div>
+      </div>
+      <span class="day-tag">HTML · CSS</span>
+      <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+    </button>
+    <div class="day-body">
+      <div class="day-body-inner">
+        <div class="day-body-content">
+          <div class="session-block">
+            <div class="session-label">Session 01</div>
+            <div class="session-title">How CSS Works</div>
+            <ul>
+              <li>What is CSS? The paint &amp; styling layer of HTML</li>
+              <li>Ways to add CSS: inline, <code style="font-family:monospace;font-size:0.75rem;color:var(--purple)">&lt;style&gt;</code> tag, external file</li>
+              <li>CSS selectors: tag, class <code style="font-family:monospace;font-size:0.75rem;color:var(--purple)">.name</code>, ID <code style="font-family:monospace;font-size:0.75rem;color:var(--purple)">#name</code></li>
+              <li>The cascade: which rule wins and why</li>
+              <li>Using browser DevTools to inspect and tweak live styles</li>
+            </ul>
+          </div>
+          <div class="session-block">
+            <div class="session-label">Session 02</div>
+            <div class="session-title">Essential CSS Properties</div>
+            <ul>
+              <li>Colour: <code style="font-family:monospace;font-size:0.75rem;color:var(--purple)">color</code>, <code style="font-family:monospace;font-size:0.75rem;color:var(--purple)">background-color</code>, hex values and named colours</li>
+              <li>Typography: <code style="font-family:monospace;font-size:0.75rem;color:var(--purple)">font-family</code>, <code style="font-family:monospace;font-size:0.75rem;color:var(--purple)">font-size</code>, <code style="font-family:monospace;font-size:0.75rem;color:var(--purple)">font-weight</code>, <code style="font-family:monospace;font-size:0.75rem;color:var(--purple)">text-align</code>, <code style="font-family:monospace;font-size:0.75rem;color:var(--purple)">line-height</code></li>
+              <li>Spacing: <code style="font-family:monospace;font-size:0.75rem;color:var(--purple)">margin</code>, <code style="font-family:monospace;font-size:0.75rem;color:var(--purple)">padding</code> — the box model explained visually</li>
+              <li>Borders: <code style="font-family:monospace;font-size:0.75rem;color:var(--purple)">border</code>, <code style="font-family:monospace;font-size:0.75rem;color:var(--purple)">border-radius</code> for rounded corners</li>
+              <li>Sizing: <code style="font-family:monospace;font-size:0.75rem;color:var(--purple)">width</code>, <code style="font-family:monospace;font-size:0.75rem;color:var(--purple)">height</code>, <code style="font-family:monospace;font-size:0.75rem;color:var(--purple)">max-width</code> in px and %</li>
+            </ul>
+          </div>
+          <div class="session-block">
+            <div class="session-label">Session 03 · Project</div>
+            <div class="session-title">Style the Bio Page End-to-End</div>
+            <ul>
+              <li>Link a Google Font and apply it site-wide</li>
+              <li>Style headings, paragraphs, links, and list items with CSS classes</li>
+              <li>Add coloured backgrounds, borders, and shadows to cards</li>
+              <li>Style the table with alternating row colours using class selectors</li>
+              <li>Peer gallery: share screens and compare different styling choices</li>
+            </ul>
+          </div>
+          <div class="outcome-col session-block" style="grid-column: 1 / -1; display:flex; flex-direction:row; gap:20px; align-items:center; background:rgba(168,85,247,0.06); border-color:rgba(168,85,247,0.2);">
+            <div style="font-size:2rem;">✅</div>
+            <div>
+              <div class="outcome-label">Day Outcome</div>
+              <p>You'll know how to make any HTML element look polished — controlling colours, fonts, spacing, borders, and sizing with CSS properties to turn plain markup into a styled, attractive page.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DAY 5 -->
+  <div class="day-card" id="d5" data-color="d5">
+    <button class="day-trigger" onclick="toggle('d5')" aria-expanded="false">
+      <span class="day-num">Day 05</span>
+      <span class="day-icon">✏️</span>
+      <div class="day-info">
+        <div class="day-name">UX / Graphic Designing using Photopea</div>
+        <div class="day-tagline">Design principles, visual thinking &amp; real-world tools</div>
+      </div>
+      <span class="day-tag">Design</span>
+      <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+    </button>
+    <div class="day-body">
+      <div class="day-body-inner">
+        <div class="day-body-content">
+          <div class="session-block">
+            <div class="session-label">Session 01</div>
+            <div class="session-title">Design Principles &amp; Visual Thinking</div>
+            <ul>
+              <li>What is UX? Design that serves people, not just looks pretty</li>
+              <li>The five principles: contrast, alignment, proximity, repetition, balance</li>
+              <li>Colour theory: warm vs cool, complementary palettes, tool — Coolors.co</li>
+              <li>Typography basics: serif vs sans-serif, font pairing do's and don'ts</li>
+              <li>Analysing real designs: what works and why</li>
+            </ul>
+          </div>
+          <div class="session-block">
+            <div class="session-label">Session 02</div>
+            <div class="session-title">Getting Started with Photopea</div>
+            <ul>
+              <li>Photopea overview — free, browser-based, Photoshop-compatible</li>
+              <li>Canvas setup: size presets for social media and print</li>
+              <li>Layers panel: creating, naming, grouping, reordering</li>
+              <li>Shape tool, text tool, and image placement basics</li>
+              <li>Exporting as PNG, JPG, and PDF</li>
+            </ul>
+          </div>
+          <div class="session-block">
+            <div class="session-label">Session 03 · Design Challenge</div>
+            <div class="session-title">Build: Social Media Banner</div>
+            <ul>
+              <li>Create an event/announcement post for a fictional brand</li>
+              <li>Apply a colour palette, chosen font pair, and layout grid</li>
+              <li>Add icons, shapes, and a background — all in Photopea</li>
+              <li>Group showcase and feedback round</li>
+              <li>Career wrap-up: Developer, Designer, QA, Data — what's next?</li>
+            </ul>
+          </div>
+          <div class="outcome-col session-block" style="grid-column: 1 / -1; display:flex; flex-direction:row; gap:20px; align-items:center; background:rgba(236,72,153,0.06); border-color:rgba(236,72,153,0.2);">
+            <div style="font-size:2rem;">✅</div>
+            <div>
+              <div class="outcome-label">Day Outcome</div>
+              <p>You'll leave with a polished graphic you created, a vocabulary for talking about design, and a clearer picture of where your interests in IT actually lie — ready to decide your path.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- DAY 5 -->
+  <div class="day-card" id="d6" data-color="d6">
+    <button class="day-trigger" onclick="toggle('d6')" aria-expanded="false">
+      <span class="day-num">Day 06</span>
+      <span class="day-icon">🤖</span>
+      <div class="day-info">
+        <div class="day-name">Introduction to AI &amp; Machine Learning</div>
+        <div class="day-tagline">What AI actually is, how ML works &amp; hands-on with real tools</div>
+      </div>
+      <span class="day-tag">AI · ML</span>
+      <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+    </button>
+    <div class="day-body">
+      <div class="day-body-inner">
+        <div class="day-body-content">
+          <div class="session-block">
+            <div class="session-label">Session 01</div>
+            <div class="session-title">What is AI &amp; Machine Learning?</div>
+            <ul>
+              <li>AI vs ML vs Deep Learning — the difference explained simply</li>
+              <li>How machines "learn": patterns, data, and predictions</li>
+              <li>Types of ML: Supervised, Unsupervised, Reinforcement (with everyday examples)</li>
+              <li>Real-world AI you already use: recommendations, voice assistants, spam filters</li>
+              <li>What data actually is — and why it's the fuel of AI</li>
+            </ul>
+          </div>
+          <div class="session-block">
+            <div class="session-label">Session 02</div>
+            <div class="session-title">Hands-On: AI Tools Without Code</div>
+            <ul>
+              <li>Exploring <strong style="color:rgba(255,255,255,0.8)">Google Teachable Machine</strong> — train an image classifier in the browser, no code</li>
+              <li>Understanding what the model is doing behind the scenes</li>
+              <li>Trying <strong style="color:rgba(255,255,255,0.8)">ChatGPT / Gemini</strong> as an AI assistant — prompts, limits, and hallucinations</li>
+              <li>Using <strong style="color:rgba(255,255,255,0.8)">QuickDraw by Google</strong> to see a neural network guess your sketches live</li>
+              <li>Discussion: what makes an AI model good or bad?</li>
+            </ul>
+          </div>
+          <div class="session-block">
+            <div class="session-label">Session 03 · Wrap-Up</div>
+            <div class="session-title">AI in Careers &amp; the Road Ahead</div>
+            <ul>
+              <li>Jobs in AI/ML: Data Analyst, ML Engineer, AI Researcher, Prompt Engineer</li>
+              <li>What skills are needed — Python, maths, curiosity</li>
+              <li>Ethical concerns: bias in AI, privacy, and deepfakes</li>
+              <li>What to learn next: Python for Data Science, intro to pandas &amp; scikit-learn</li>
+              <li>Q&amp;A and 5-day reflection: what excited you most this week?</li>
+            </ul>
+          </div>
+          <div class="outcome-col session-block" style="grid-column: 1 / -1; display:flex; flex-direction:row; gap:20px; align-items:center; background:rgba(236,72,153,0.06); border-color:rgba(236,72,153,0.2);">
+            <div style="font-size:2rem;">✅</div>
+            <div>
+              <div class="outcome-label">Day Outcome</div>
+              <p>You'll understand what AI and ML actually are (not just buzzwords), have trained your own image-recognition model without writing a single line of code, and know exactly what steps to take if you want to go deeper into this field.</p>
+            </div>
+          </div>
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>
+ 
+</div>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <img class="logo-img" src="data:image/png;base64,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" alt="NexusUdaan" />
+      <p>Empowering students with practical IT skills to explore, learn, and decide their future with confidence.</p>
+    </div>
+    <div class="footer-col">
+      <h5>Contact</h5>
+      <ul>
+        <li>📧 <a href="kartikey.pal@nexusudaan.in">kartikey.pal@nexusudaan.in</a></li>
+        <li>📞 <a href="tel:+918894276547">+91 8894276547</a></li>
+        <li>📍 Kakarhatti, HP, India</li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Links</h5>
+      <ul>
+        <li><a href="https://nexusudaan.in/#">NexusUdaan Website</a></li>
+        <li><a href="mailto:contact@nexusudaaan.in">Register / Enquire</a></li>
+        <li><a href="https://nexusudaan.in/#product">More Programmes</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 NexusUdaan. All rights reserved.</span>
+    <span>Your journey to the right IT career starts here.</span>
+  </div>
+</footer>
+
+<script>
+  function toggle(id) {
+    const card = document.getElementById(id);
+    const btn  = card.querySelector('.day-trigger');
+    const isOpen = card.classList.contains('open');
+    card.classList.toggle('open', !isOpen);
+    btn.setAttribute('aria-expanded', String(!isOpen));
+  }
+</script>
+
+</body>
+</html>
